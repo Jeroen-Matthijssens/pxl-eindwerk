@@ -5,33 +5,33 @@
 
 \paragraph {} Sencha Extjs is een javascript
 framework\footnote{https://www.sencha.com/products/extjs/\#overview} om crossplatform web
-applications te maken voor de desktop, table en smartphone. Ze willen gebruik kunnen maken
+applications te maken voor de desktop, tablet en smartphone. Ze willen gebruik kunnen maken
 met HTML5 features, maar toch backwards compatible blijven met oudere browsers.
 
 \paragraph {} De layout wordt berekend door hun layout engine die in javascript de hoogte
-en breedte berekent van alle component, en dan deze waarden als \lstinline{height} en
-\lstinline{width} zet op de html elementen. Dit betekend dat op de groot aantal dom
-elementen in je html css stylen worden overschreven. Om deze positionering goed te laten
-werken plaats sencha de visuele component op de pagina in een extra div element dat door
+en breedte berekent van alle componenten, en dan deze waarden als \lstinline{height} en
+\lstinline{width} zet op de html elementen. Dit betekend dat op het grote aantal dom-elementen
+in je html css stylen worden overschreven. Om deze positionering goed te laten
+werken plaatst Sencha de visuele componenten op de pagina in een extra div element dat door het
 framework gebruikt kan worden om deze berekeningen op te baseren.
 
-Dit houd ook in dat een deel van de layout en styling hoort te gebeuren in de view
-'classes' die je in sencha maakt. Dit klinkt natuurlijk logisch, maar elke andere visuele
+Dit houdt ook in dat een deel van de layout en styling hoort te gebeuren in de view
+'classes' die je in Sencha maakt. Dit klinkt natuurlijk logisch, maar elke andere visuele
 configuratie dient te gebruiren in afzonderlijke css bestanden. Dus niet alle informatie
 die de layout van je pagina beschrijft staat bij elkaar.
 
-Normaal doe je de styling van je pagina's in css, zodat je styling en content van elkaar
-gescheiden blijven. Maar omdat sencha absoluut zijn layout engine wil gebruiken MOET je de
+Normaal doe je de styling van je paginss in css, zodat je styling en content van elkaar
+gescheiden blijven. Maar omdat Sencha absoluut zijn layout engine wil gebruiken MOET je de
 positionering van je componenten wel in code doen.
 
-\paragraph {} Sencha bied een object georienteerde manier van programeren. Javascript
+\paragraph {} Sencha bied een object georiënteerde manier van programeren aan. Javascript
 heeft objecten, maar zijn niet de objecten die je zou verwachten als je een object
-geori\"enteerde taal gewoon bent (zoals java, ruby, smalltalk, ...). Javascript is een
-prototyped taal, geen object geori\"enteerde taal. Als je probeert OO semantiek in
+georiënteerde taal gewoon bent (zoals java, ruby, smalltalk, ...). Javascript is een
+prototyped taal, geen object georiëenteerde taal. Als je probeert OO semantiek in
 javascript te introduceren stuit je op problemen.
 
 Een goed voorbeeld is het gebruik van \lstinline{this}. In javascript heeft dit een andere
-betkenis dan bijvoorbeeld in java. Er is geen enkele manier om hier rond te werken. In
+betekenis dan bijvoorbeeld in java. Er is geen enkele manier om hier rond te werken. In
 javascript kan je functies meegeven als argumenten. Dit komt vaak voor onder de vorm van
 een callback. Als de functie klaar is met de berekeningen wordt de callback opgeroepen. Op
 dat moment is \lstinline{this} in de callback niet meer de \lstinline{this} die je had op
@@ -61,7 +61,7 @@ Ext.Ajax.request ({ callback: function () { me.handleResponse (); }, ... });
 \end{lstlisting}
 
 Een andere optie is om je 'scope' mee te geven aan \lstinline{request ()}. Dit is een
-manier van werken die op veel plaatsen in sencha ondersteunt wordt.
+manier van werken die op veel plaatsen in Sencha ondersteunt wordt.
 
 \begin{lstlisting}[language=ownjavascript]
 Ext.Ajax.request ({ callback: this.handleResponse, scope: this, ... });
@@ -74,9 +74,9 @@ Ext.Ajax.request ({ callback: this.handleResponse.bind (this), ... });
 \end{lstlisting}
 
 
-\paragraph {} In sencha code zie je op veel plaatsen steevast \lstinline{var me = this;}
+\paragraph {} In Sencha code zie je op veel plaatsen steevast \lstinline{var me = this;}
 staan. Alle functies worden dat op het \lstinline{me} object opgeroepen, op die manier
-merk je het verschil tussen sencha als oo layer en javascript minder, maar het is geen
+merk je het verschil tussen Sencha als oo layer en javascript minder, maar het is geen
 oplossing. Je hebt nog altijd dezelfde problemen. \lstinline{callback: me.handleResponse}
 gaat nog altijd een error veroorzaken.
 
@@ -85,7 +85,7 @@ in javascript bestaat dit niet. Je kan de naam of het woord er wel rond plaatsen
 zorgt er niet voor dat dit zich als static methods of properties gaat gedragen.
 
 Door te doen alsof je op een OO manier kan programmeren in javascript
-hou je echte begrip van de taal waar je echt mee werkt tegen. In sencha lijkt men er
+hou je echte begrip van de taal waar je echt mee werkt tegen. In Sencha lijkt men er
 vanuit te gaan dat je OO nodig hebt om code te structureren, dit is zeker niet het geval.
 Is het dan niet beter om je code te structureren met technieken die toepasselijk zijn in
 de taal waarmee je werkt?
@@ -98,9 +98,9 @@ Dus ook geen echte versie voor packages die je zelf maakt.
 
 
 \paragraph {} Sencha wil je zo veel mogelijk scheiden van html css, en echte javascript.
-(bvb sencha architect).
+(bvb Sencha architect).
 
-\paragraph {} Het mechanisme dat sencha gebruikt om te bepalen welke listeners op
+\paragraph {} Het mechanisme dat Sencha gebruikt om te bepalen welke listeners op
 viewmodels moeten uitgevoerd worden werkt enkel goed voor het ingebouwde framework. Je kan
 dit gebruiken door een aantal configuraties. Als je dit op andere manieren wilt gebruiken
 werket dit goed zolang je wilt luisteren naar veranderingen van primiteve waarden.
@@ -184,17 +184,17 @@ code kan delen tussen mobile en desktop applicaties).
 
 \subsection {Template herstructurering}
 
-\paragraph {} Een voorbeeld waar sencha het lastig maakt is in het templating systeem. Dit
+\paragraph {} Een voorbeeld waar Sencha het lastig maakt is in het templating systeem. Dit
 is eigenlijk iets dat intern door het framework gebruikt. Daarbuiten kunnen eindgebruikers
 van het framework zelf templates maken, hoewel het afgeraden wordt. Het templating
 gedeelte is daardoor niet erg flexibel.
 
 \paragraph {} Toen we de schemas wilde tonen waren er twee mogelijke methoden van aanpak.
-We konden de sencha grid met stores gebruiken, of we konden zelf een template maken die
+We konden de Sencha grid met stores gebruiken, of we konden zelf een template maken die
 gebruik maakte van de stores om data op het scherm te tonen. Er zijn een aantal varianten
 nodig van die template.
 
-Op de standaard sencha manier zou je code moeten bijschrijven, of moet je twee keer de
+Op de standaard Sencha manier zou je code moeten bijschrijven, of moet je twee keer de
 template maken, en eentje licht aanpassen voor het nieuwe gebruik, met andere woorden
 duplicatie.
 
@@ -348,7 +348,7 @@ Aan de andere kant kan een template hebben die de structuur aangeeft, maar op ee
 plaatsen verwijst naar andere templates die de stukjes in vullen. Bijvoorbeeld een blog
 past waar onderaan een form staat om opmerkingen achter te laten.
 
-\paragraph {} Niets van dit is mogelijk met sencha templates. Met de nieuwe templates kan
+\paragraph {} Niets van dit is mogelijk met Sencha templates. Met de nieuwe templates kan
 je deze afhankelijkheden in de template zelf specificeren. Je moet dus geen code meer
 schrijven om andere templates toe te includen. Om de templates aan elkaar te kopelen
 bestaat er iets als een template store. Dit is een verzameling van templates die onderling
@@ -436,9 +436,9 @@ een object die de waardes bevat voor de template (\lstinline{template.apply (val
 \subsection {Werking van \lstinline {values}}
 
 \paragraph {} Hierboven hebben we de grootste motivaties aangehaald om de template engine
-van sencha uit te breiden. We hebben er geen parameters of externe waarden gebruikt.
+van Sencha uit te breiden. We hebben er geen parameters of externe waarden gebruikt.
 Natuurlijk is het noodzakelijk dat je wel variablen kan meegeven bij het uitvoeren van je
-template. We zijn hier licht afgeweken van de manier waarop sencha zijn expressies voor
+template. We zijn hier licht afgeweken van de manier waarop Sencha zijn expressies voor
 variablen behandeld.
 
 \paragraph {} Wanneer een template start kan je alle waarden terug vinden in het
@@ -724,7 +724,7 @@ je ooit een deel van je context verliest.
 	\lstinline{<tpl elseif="..." />}, \lstinline{<tpl else="..." />})}
 
 \paragraph {} De statements voor de control flow werken zoals je zou verwachten. Het
-verschil met de standaard sencha templates is dat nu de expressies voor de attrituben
+verschil met de standaard Sencha templates is dat nu de expressies voor de attrituben
 exact dezelfde zijn als de expressies die je zou gebruiken in \lstinline|{[ ... ]}|.
 
 \paragraph {}Als je \lstinline{<tpl elseif="" />} of \lstinline{<tpl else="" />} gebruikt
@@ -782,7 +782,7 @@ bedoeling om waarden in global scope aan te maken of aan te passen. Ook dit anti
 patroon word niet tegengehouden.
 
 \paragraph {} Dit is geen beperking van de nieuwe implementatie. Ook de templates die je
-op de normale manier in sencha maakt kan je misbruik maken van global scope, enz.
+op de normale manier in Sencha maakt kan je misbruik maken van global scope, enz.
 
 \paragraph {} Niet alle whitespace in de template wordt op dezelfde manier behandeld. Een
 stuk text dat enkel bestaat uit whitespace en een cariage return bevat wordt volledig
