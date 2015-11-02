@@ -1,0 +1,839 @@
+\section {Project verloop}
+
+
+\subsection {Beperkingen van Sencha Extjs}
+
+\paragraph {} Sencha Extjs is een javascript
+framework\footnote{https://www.sencha.com/products/extjs/\#overview} om crossplatform web
+applications te maken voor de desktop, table en smartphone. Ze willen gebruik kunnen maken
+met HTML5 features, maar toch backwards compatible blijven met oudere browsers.
+
+\paragraph {} De layout wordt berekend door hun layout engine die in javascript de hoogte
+en breedte berekent van alle component, en dan deze waarden als \lstinline{height} en
+\lstinline{width} zet op de html elementen. Dit betekend dat op de groot aantal dom
+elementen in je html css stylen worden overschreven. Om deze positionering goed te laten
+werken plaats sencha de visuele component op de pagina in een extra div element dat door
+framework gebruikt kan worden om deze berekeningen op te baseren.
+
+Dit houd ook in dat een deel van de layout en styling hoort te gebeuren in de view
+'classes' die je in sencha maakt. Dit klinkt natuurlijk logisch, maar elke andere visuele
+configuratie dient te gebruiren in afzonderlijke css bestanden. Dus niet alle informatie
+die de layout van je pagina beschrijft staat bij elkaar.
+
+Normaal doe je de styling van je pagina's in css, zodat je styling en content van elkaar
+gescheiden blijven. Maar omdat sencha absoluut zijn layout engine wil gebruiken MOET je de
+positionering van je componenten wel in code doen.
+
+\paragraph {} Sencha bied een object georienteerde manier van programeren. Javascript
+heeft objecten, maar zijn niet de objecten die je zou verwachten als je een object
+geori\"enteerde taal gewoon bent (zoals java, ruby, smalltalk, ...). Javascript is een
+prototyped taal, geen object geori\"enteerde taal. Als je probeert OO semantiek in
+javascript te introduceren stuit je op problemen.
+
+Een goed voorbeeld is het gebruik van \lstinline{this}. In javascript heeft dit een andere
+betkenis dan bijvoorbeeld in java. Er is geen enkele manier om hier rond te werken. In
+javascript kan je functies meegeven als argumenten. Dit komt vaak voor onder de vorm van
+een callback. Als de functie klaar is met de berekeningen wordt de callback opgeroepen. Op
+dat moment is \lstinline{this} in de callback niet meer de \lstinline{this} die je had op
+het moment dat je de andere functien oproept.
+
+\begin{lstlisting}[language=ownjavascript]
+Ext.define ('SomeClass', {
+	first: function first () {
+		Ext.Ajax.request ({
+			...
+			callback: this.handleResponse
+		});
+	},
+	handleResponse: function handleResponse () {
+		...
+	}
+});
+\end{lstlisting}
+
+De \lstinline{handleResponse ()} method wordt wel megegeven, maar je kan niet meer aan de
+waarden van de \lstinline{SomeClass}. Er zijn een aantal oplossingen voor dat probleem. De
+eerste is een variable introduceren om de waarden van \lstinline{this} vast te houden.
+
+\begin{lstlisting}[language=ownjavascript]
+var me = this;
+Ext.Ajax.request ({ callback: function () { me.handleResponse (); }, ... });
+\end{lstlisting}
+
+Een andere optie is om je 'scope' mee te geven aan \lstinline{request ()}. Dit is een
+manier van werken die op veel plaatsen in sencha ondersteunt wordt.
+
+\begin{lstlisting}[language=ownjavascript]
+Ext.Ajax.request ({ callback: this.handleResponse, scope: this, ... });
+\end{lstlisting}
+
+Je kan ook javascript features gebruiken \lstinline{callback: me.handleRespnose.bind (this)}
+
+\begin{lstlisting}[language=ownjavascript]
+Ext.Ajax.request ({ callback: this.handleResponse.bind (this), ... });
+\end{lstlisting}
+
+
+\paragraph {} In sencha code zie je op veel plaatsen steevast \lstinline{var me = this;}
+staan. Alle functies worden dat op het \lstinline{me} object opgeroepen, op die manier
+merk je het verschil tussen sencha als oo layer en javascript minder, maar het is geen
+oplossing. Je hebt nog altijd dezelfde problemen. \lstinline{callback: me.handleResponse}
+gaat nog altijd een error veroorzaken.
+
+\paragraph {} Het heeft geen zin om bepaalde functies als \lstinline{static} te markeren,
+in javascript bestaat dit niet. Je kan de naam of het woord er wel rond plaatsen, maar dat
+zorgt er niet voor dat dit zich als static methods of properties gaat gedragen.
+
+Door te doen alsof je op een OO manier kan programmeren in javascript
+hou je echte begrip van de taal waar je echt mee werkt tegen. In sencha lijkt men er
+vanuit te gaan dat je OO nodig hebt om code te structureren, dit is zeker niet het geval.
+Is het dan niet beter om je code te structureren met technieken die toepasselijk zijn in
+de taal waarmee je werkt?
+
+
+\paragraph {} build tools komen niet overeen met wat je zou verwachten voor een javascript
+applicatie. De build tools zijn gebazeerd op ant. Terwijl de rest van de wereld
+
+Dus ook geen echte versie voor packages die je zelf maakt.
+
+
+\paragraph {} Sencha wil je zo veel mogelijk scheiden van html css, en echte javascript.
+(bvb sencha architect).
+
+\paragraph {} Het mechanisme dat sencha gebruikt om te bepalen welke listeners op
+viewmodels moeten uitgevoerd worden werkt enkel goed voor het ingebouwde framework. Je kan
+dit gebruiken door een aantal configuraties. Als je dit op andere manieren wilt gebruiken
+werket dit goed zolang je wilt luisteren naar veranderingen van primiteve waarden.
+
+\begin{lstlisting}[language=ownjavascript]
+var model = Ext.create ('Ext.app.ViewModel');
+model.bind ('{test}', function onTestChange (newValue, oldvalue) {
+	console.log ('got a new value', newValue);
+});
+
+model.set ('test', 0); // got a new value 0
+model.set ('test', model.get ('test') + 1);
+\end{lstlisting}
+
+Dit werkt ook nog goed met diep geneste waarde.
+
+\begin{lstlisting}[language=ownjavascript]
+function notified (path) {
+	return fuction (newValue, oldValue) {
+		console.log (path, 'changed from', oldValue, 'to', newValue);
+	}
+}
+
+model.bind ('{root.test}', notified ('root.test'));
+
+model.set ('root.test', 0);
+// root.test changef from undefined to 0
+model.set ('root.test', model.get ('test') + 1);
+// root.test changef from 0 to 1
+
+model.get ('root'); // { test: 1 }
+\end{lstlisting}
+
+Willen we ook gewaarschuwd worden als er waarden dieper op het object aangepast worden
+kunnen we dit met wat configuratie.
+
+\begin{lstlisting}[language=ownjavascript]
+model.bind ('{root}', notified ('root'));
+model.set ('root.test', 0);
+// nothing was notified
+
+model.bind ('{root}', notified ('root'), null, { deep: true});
+model.set ('root.test', 0);
+// root changef undefined to Object {test: 0}
+\end{lstlisting}
+
+Maar dit werkt niet meer als we niet de \lstinline{set ()} method van de viewmodel
+gebruiken om de waarden rechtstreeks te veranderen. Sencha zal achter de schremen
+controleren of de de nieuwe waarde die het krijgt veranderd is (als de \lstinline{===}
+vergelijking \lstinline{false} teruggeeft).
+
+\begin{lstlisting}[language=ownjavascript]
+model.bind ('{root.deep}', notified ('root.deep.value'), null, { deep: true });
+
+var deep = model.get ('root.deep');
+deep.value = 'someValue';
+// nothing is notified
+model.set ('root.deep', deep);
+// nothing is notified
+\end{lstlisting}
+
+In dit geval zou je eenvoudig gewoon de waarde kunnen zetten, maar dit werkt niet meer als
+we het object doorgeven aan een andere functie die geen viewmodels aanvaard. Er bestaat
+ook geen mechanisme of toch een de listeners op zo een waarde te waarschruwen.
+
+\begin{lstlisting}[language=ownjavascript]
+var deep = model.get ('root.deep');
+completeDeepValues (deep);
+\end{lstlisting}
+
+\paragraph {} Angular js behandeld dit probleem op een heel andere manier. Er worden twee
+versien bijgehouden, de echte data op de view model, en de toestand van de data voor user
+code wordt uitgevoerd. Op het einde loop Angular over de twee object en controleerd of er
+ergens wijzigingen zijn aangebracht. Dit lijkt een performantie nachtmerrie, maar HET
+WERKT TENMINSTE!
+
+
+\paragraph {} erg reactief en dus traag voor nieuwe dingen. (pas NU een versies waar je
+code kan delen tussen mobile en desktop applicaties).
+
+
+\subsection {Template herstructurering}
+
+\paragraph {} Een voorbeeld waar sencha het lastig maakt is in het templating systeem. Dit
+is eigenlijk iets dat intern door het framework gebruikt. Daarbuiten kunnen eindgebruikers
+van het framework zelf templates maken, hoewel het afgeraden wordt. Het templating
+gedeelte is daardoor niet erg flexibel.
+
+\paragraph {} Toen we de schemas wilde tonen waren er twee mogelijke methoden van aanpak.
+We konden de sencha grid met stores gebruiken, of we konden zelf een template maken die
+gebruik maakte van de stores om data op het scherm te tonen. Er zijn een aantal varianten
+nodig van die template.
+
+Op de standaard sencha manier zou je code moeten bijschrijven, of moet je twee keer de
+template maken, en eentje licht aanpassen voor het nieuwe gebruik, met andere woorden
+duplicatie.
+
+
+\subsection {Normale Sencha XTemplate werking}
+
+\paragraph {} Sencha templates werken door het gebruik van \lstinline{<tpl />} tags in de
+html die je wilt generenen. Deze tags krijgen dan speciale betekenis op basis van de
+attributen die er in voorkomen.
+
+Om waarden in het eind resultaat te incorporeren wordt
+gebruik gemaakt door uitdrukkingen tussen \lstinline|{ ... }| te zetten. De waarde van de
+uitdrukking wordt dan in de html opgenomen. De expressie binnen de accolades wordt
+ge\"evalueerd ten opzichten van een speciaal \lstinline{values} object (later hier meer
+over).
+
+Het is ook mogelijk on \lstinline|{[ ... ]}|
+te gebruiken. In dit geval wordt de uitdrukking niet ge\"evalueerd tenopzichte van het
+\lstinline{values} object, maar als gewone jaavscript. Als laatste heb je ook nog de
+mogelijk om uitdrukkingen tussen \lstinline|{\% ... \%}| te plaatsen. Dit is javascript
+die uitgevoerd wordt, maar niet in de gegeneerde html verschijnt.
+
+\begin{lstlisting}[language=xml]
+<tpl for="users">
+	<tpl if="active">
+		{% console.log (values); %}
+		{name} {[ values.lastname.toUpperCase () ]}
+	</tpl>
+</tpl>
+\end{lstlisting}
+
+\begin{lstlisting}[language=ownjavascript]
+var users = [
+	{ name: 'John', lastname: 'Doe', active: false },
+	{ name: 'Jane', lastname: 'Doe', active: true }
+];
+var tpl = Ext.create ('Ext.XTemplate', getAboveString ());
+tpl.apply ({ users: users });
+// Jane DOE
+\end{lstlisting}
+
+\paragraph {} Als je een template hebt kan je deze toepassen op een javascript object. Dit
+object telt dan als het \lstinline{values} object voor de template. Als je expressies
+gebruikt in \lstinline{<tpl />} attribute wordt dit uitgevoerd binnen de context van het
+\lstinline{values} object.
+
+\paragraph {} Als de template een \lstinline{<tpl for="..." />} tegenkomt zal het lopen
+over alle waarde, maar binnen in de loop wordt het \lstinline{values} object veranderd
+naar het object van de huidige iteratie van de loop. Op dit nieuwe object wordt dan het
+voorgaande object bereikbaar via de \lstinline {parent} variable.
+
+\begin{lstlisting}[language=xml]
+<tpl for="users">
+	{name} is een van de {[ parent.users.length ]} personen.
+	{name} is echt een van de {parent.users.length} personen.
+</tpl>
+
+<!-- resultaat
+John is een van de 2 personen.
+John is echt een van de 2 personen.
+
+Jane is een van de 2 personen.
+Jane is echt een van de 2 personen.
+-->
+\end{lstlisting}
+
+\paragraph {} Het parent object heeft zelf geen parent porperty. Willen we nu bijvoorbeeld
+een dubbele for lus hebben, dan kunnen we niet meer aan onze oorspronkelijke context.
+
+\begin{lstlisting}[language=ownjavascript]
+var users = [
+	{ name: 'John', lastname: 'Doe', active: false, phones: [ '012 / 34 56 78', ...] },
+	...
+];
+var tpl = Ext.create ('Ext.XTemplate', getTplString ());
+tpl.apply ({ users: users, countryCode: '+ 32' });
+\end{lstlisting}
+
+\begin{lstlisting}[language=xml]
+<tpl for="users">
+	{naam} is bereikbaar op
+	<tpl for="phones">
+		{parent.parent.countryCode} {.}
+	</tpl>
+</tpl>
+
+<!-- resultaat
+John is bereikbaar op
+012 / 34 56 78
+...
+-->
+\end{lstlisting}
+
+\lstinline|{.}| evalueert naar het huidige \lstinline{values} object als een string.
+\lstinline|{#}| evalueert naar de index van de huidige loop. Deze index begint te tellen
+vanaf 1.
+
+\paragraph {} Je kan de template ook een aantal methods meegeven zodat deze kunnen
+gebruikt worden binnen in de template.
+
+\begin{lstlisting}[language=ownjavascript]
+var tpl = Ext.create ('Ext.XTemplate', getTplString (), {
+	greeting: function greeting () {
+		return 'greeting';
+	},
+	formatNumber: function formatNumber (number) {
+		return number.toString ().replace ('.', ',');
+	}
+});
+tpl.apply ({ example: 1.2 });
+\end{lstlisting}
+
+\begin{lstlisting}[language=xml]
+{[ this.greeting () ]}
+{example:this.formatNumber}
+
+<!-- resultaat
+greeting
+1,2
+-->
+\end{lstlisting}
+
+\paragraph {} De templating ziet er uit als xml/html, maar dat is het niet
+
+\begin{lstlisting}[language=xml]
+<tpl if="condition">
+	...
+<tpl elseif="condition2">
+	...
+<tpl alse>
+	...
+</tpl>
+\end{lstlisting}
+
+
+\subsection {Nieuwe werking}
+
+\paragraph {}Het Meest basic dat de meeste templating engine hebben is een manier om een
+andere template te gebruiken door inclusie. Sencha ondersteunt dit niet.
+
+Daarbij kan je templates op twee manieren uitbreiden.
+
+Je zou je kunnen voorstellen dat een
+template net het zelfde is als een andere template, op een aantal stukken na. Je template
+zou dan verwijzen naar een andere template, en het is die template dat de eigenlijke
+structuur bepaalt. Bijvoorbeeld een web pagina, waar altijd een menu vanboven staat samen
+met een loge, een footer met contact informatie beneden. Maar elke pagina is een beetje
+anders, de eigenlijke inhoud van de pagina veranderd.
+
+Aan de andere kant kan een template hebben die de structuur aangeeft, maar op een aantal
+plaatsen verwijst naar andere templates die de stukjes in vullen. Bijvoorbeeld een blog
+past waar onderaan een form staat om opmerkingen achter te laten.
+
+\paragraph {} Niets van dit is mogelijk met sencha templates. Met de nieuwe templates kan
+je deze afhankelijkheden in de template zelf specificeren. Je moet dus geen code meer
+schrijven om andere templates toe te includen. Om de templates aan elkaar te kopelen
+bestaat er iets als een template store. Dit is een verzameling van templates die onderling
+naar elkaar kunnen verwijzen door middel van een naam. Je kan deze templates gewoon in een
+xml file bij elkaar zetten.
+
+\begin{lstlisting}[language=xml]
+<? xml version="1.0" encoding="UTF-8" ?>
+<templates>
+
+	<template name="base">
+		first line
+		<tpl block="second-line" />
+		lastline
+	</template>
+
+	<template name="main">
+		<tpl extend="base" />
+
+		<tpl block="second-line">
+			middel line
+		</tpl>
+	</template>
+
+</templates>
+\end{lstlisting}
+
+\begin{lstlisting}[language=xml]
+<? xml version="1.0" encoding="UTF-8" ?>
+<templates>
+
+	<template name="main">
+		...
+		<tpl include="footer" />
+	</template>
+
+	<template name="footer">
+		...
+	</template>
+
+</templates>
+\end{lstlisting}
+
+De nieuwe functionalitiet is toegankelijk door gebruik te maken van een aantal
+\lstinline{<tpl />} tags. We tonen later hoe deze tags samenwerken en voor meer
+flexibiliteit zorgen.
+
+\begin{enumerate}
+	\item \lstinline{<tpl include="" />}
+	\item \lstinline{<tpl extend="" />}
+	\item \lstinline{<tpl block="" />}
+	\item \lstinline{<tpl for="" />}
+	\item \lstinline{<tpl foreach="" />}
+	\item \lstinline{<tpl if="" />}
+	\item \lstinline{<tpl elseif="" />}
+	\item \lstinline{<tpl else="" />}
+\end{enumerate}
+
+
+\subsection {general setup}
+
+\paragraph {} Zoals kort beschreven worden template strings nu gegroepeerd en krijgt elke
+template een naam. De systax is nu zo dat de templates wel geldige xml zijn (geen
+rekening houdend met namespaces). Je kan de templates dan makkelijk in een xml file
+gieten zonder dat tools en editors klagen over foute syntax.
+
+Een store kan je dan maken door de urls op te geven naar de template bestanden. Bij het
+maken van een template geef je dan de store mee waar de template zich in bevindt, en de
+naam van de template die je wilt gebruiken.
+
+\begin{lstlisting}[language=ownjavascript]
+var store = Ext.create ('XmlTemplateStore', { templateFiles: ['templates.xml'] });
+var template = Ext.create ('XCTemplate', {
+	templateStore: store,
+	templateName: 'include-test-main'
+});
+template.compile ();
+\end{lstlisting}
+
+De compile stap is optioneel, als je deze niet uitvoert wordt dit gedaan als je de
+template de eerste keer toepast. Je kan de template nu gebruiken door ze toe te passen op
+een object die de waardes bevat voor de template (\lstinline{template.apply (values)}).
+
+
+\subsection {Werking van \lstinline {values}}
+
+\paragraph {} Hierboven hebben we de grootste motivaties aangehaald om de template engine
+van sencha uit te breiden. We hebben er geen parameters of externe waarden gebruikt.
+Natuurlijk is het noodzakelijk dat je wel variablen kan meegeven bij het uitvoeren van je
+template. We zijn hier licht afgeweken van de manier waarop sencha zijn expressies voor
+variablen behandeld.
+
+\paragraph {} Wanneer een template start kan je alle waarden terug vinden in het
+\lstinline{values} object (net zoals sencha). Maar de \lstinline|{ ... }| syntax word niet
+ondersteunt. De beperkingen van deze syntax worden eerder al aangehaald. Je verliest een
+deel van de context (\lstinline{parent.parent} bestaat niet) je 2 for lussen in elkaar
+nest (een veel voorkomend bijvoorbeeld is een tabel opbouwen, binnen elke rij voor elke
+kolom word iets gedaan).
+
+\paragraph {} In de nieuwe templates wordt \lstinline{values} niet veranderd wanneer we
+in een for lus werken, maar kan je in de for lus aangeven hoe je de variable wilt
+aanspreken (zie looping). \lstinline{values} blijft altijd verwijzen naar de waarde
+waarmee de template wordt uitgevoerd.
+
+\paragraph {} De syntax die wel nog ondersteunt wordt is \lstinline|{[ ... ]}| (resultaat
+van de expressie opnemen in de uitput), en \lstinline|{% ... %}| (expressie uitvoeren maar
+het resultaat niet opnemen in de output. Deze gedragen zich zoals voorheen. Je kan op deze
+manier extra variabelen toegankelijk maken.
+
+\begin{lstlisting}[language=xml]
+<template name="main">
+	{% var manyUsers = values.users.length > 10; %}
+	{% var nrOfPages = Math.ceil (values.users.length); %}
+	...
+	<tpl if="manyUsers">
+		<a href="#users/2">next</a>
+		<a href="#users/{[ nrOfPages ]}">last</a>
+	</tpl>
+</template>
+\end{lstlisting}
+
+\paragraph {} De manier om informatie op te vragen en te gebruiken is op deze manier
+consistent. In de normale Sencha templates is dit minder gestroomlijnd \lstinline|{naam}|,
+maar \lstinline|{[values.naam]}|, \lstinline|{parent}| en ook \lstinline|{[parent]}|,
+\lstinline|{#}| maar \lstinline|{[xindex]}|, ...
+
+
+\subsubsection {Include (\lstinline{<tpl include="..." values="..." />})}
+
+\paragraph {} Dit statement zal in dezelfde store zoeken naar een template met de naam als
+de waarde van het \lstinline{include} attribuut, en deze template uitvoeren op de plaats
+waar dit statement voorkomt.
+
+\paragraph {} Belangrijk is om de \lstinline{values} door te geven waarmee je wilt dat de
+subtemplate zal werken. Doe je dit niet, dan zal de subtemplate helemaal geen waardes
+hebben en dus ook geen juist resultaat tonen.
+
+\paragraph {} Dat je deze waardes kan meegeven geeft je veel flexibiliteit. De main
+template meot niet beginnen met waarden die in de subtemplate verwacht worden. Je kan ook
+dezelfde sub template meerdere keren gebruiken maar met andere waarden.
+
+\begin{lstlisting}[language=xml]
+<template name="main">
+	Hello <tpl include="sub" values="values.user" />!
+</template>
+
+<template name="sub">
+	{[ values.firstname ]} {[ values.lastname ]}
+</template>
+\end{lstlisting}
+
+\begin{lstlisting}
+{
+	"user": {
+		"firstname: "John"
+		"lastname": "Doe"
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+Hello John Doe!
+\end{lstlisting}
+
+
+\subsubsection {Extend and Block (\lstinline{<tpl extend="..." />}, \lstinline{<tpl block="..." values="..." />})}
+
+\paragraph {} Het \lstinline{<tpl extend="..." />} statement geeft aan dat de structuur
+van de template overeenkomt met die van de template vernoemt door de waarde van het
+\lstinline{extend} attribuut. Dit betekent dat de template exact het zelfde is maar dat de
+blocken in de hooft template overschreven worden.
+
+\paragraph {} Een block in een template wordt aangegeven met een
+\lstinline{<tpl block="..." />} statement. In een template die een andere extend is de
+inhoud van zo een block een deel van de template die wordt uitgevoerd. Voor een template
+die niet extend geeft een block aan waar deze template zal verschillen voor templates die
+extenden.
+
+\begin{lstlisting}[language=xml]
+<template name="structure">
+	Hello <tpl block="user" values="values.user" />!
+</template>
+
+<template name="colloquial">
+	<tpl extend="structure" />
+	<tpl block="user">
+		{[ values.firstname ]}
+	</tpl>
+</template>
+
+<template name="formal">
+	<tpl extend="structure" />
+	<tpl block="user">
+		Mister {[ values.lastname ]}
+	</tpl>
+</template>
+\end{lstlisting}
+
+\paragraph {} Net zoals voor het \lstinline{<tpl include="..." />} statement moet je in de
+main template opgeven welke waardes er worden doorgegeven aan de blocken die uiteindelijk
+zullen worden uitgevoerd. Doe je dit niet, dan resulteert dit net zoals voor een include
+in een foutief resultaat. De waardes moeten niet meer worden opgegeven voor de template
+die de main template extend.
+
+\paragraph {} Als je een andere template extend kan je geen nieuwe blocken toevoegen, je
+kan alleen blocken die in de main template werden gedefinieerd overschrijven.
+
+\paragraph {} Een block kan ook een default waarde krijgen voor het geval dat een andere
+template deze block niet overschrijft. Dit is handig als een block vaak dezelfde waarde
+heeft, maar in sommige gevallen toch aangepast moet worden.
+
+\begin{lstlisting}[language=xml]
+<template name="structure">
+	Hello <tpl block="user" values="values.user">World</tpl>!
+</template>
+
+<template name="main">
+	<tpl extend="structure" />
+</template>
+\end{lstlisting}
+
+\begin{lstlisting}
+Hello World!
+\end{lstlisting}
+
+\paragraph {} Het is mogelijk om een template die een andere template extend zelf ook te
+extenden. Het komt waarschrijnlijk niet zo vaak voor dat je aan deze fuctionaliteit
+behoefte hebt, maar de implementatie liet dit automatisch toe. Conceptueel worden de
+invullingen van de blocken eerst gezocht in de template die wordt uitgevoerd, dan in de
+parent van deze template, daarna in de parent van deze parent, enzovoort.
+
+\paragraph {} In een block kan je ook andere templates includen. Deze templates kunnen
+zelf templates zijn die een derde template extenden.
+
+\begin{lstlisting}[language=xml]
+<template name="main">
+	<tpl extend="blog" />
+	<tpl block="menu">...</tpl>
+	<tpl block="footer">...</tpl>
+</template>
+
+<template name="blog">
+	<tpl extend="structure" />
+	<tpl block="body">
+		{[ values.blogpost.title ]}
+		{[ values.blogpost.body ]}
+		<tpl include="blogcomments" values="values.blog.comments" />
+	</tpl>
+</template>
+
+<template name="structure">
+	<tpl block="menu" values="values" />
+	<tpl block="boby" values="values" />
+	<tpl block="footer" values="values" />
+</template>
+
+<template name="blogcomments">
+	<tpl extend="comments" values="" />
+	<tpl block="top">
+		<form class="comment-form">
+			...
+		</form>
+	</tpl>
+</template>
+
+<template name="comments">
+	...
+</template>
+\end{lstlisting}
+
+\paragraph {} Je kan in een block ook andere templates includen. Regelmatig wil je in een
+template aangeven dat een bepaalde block eigenlijk gewoon een andere template is die je
+include. Hiervoor is wat syntactische suiker voorzien.
+
+\begin{lstlisting}[language=xml]
+<template name="main">
+	<tpl extend="structure" />
+	<tpl block="body" include="body" />
+</template>
+
+<template name="structure">
+	<tpl block="boby" values="values" />
+</template>
+
+<template name="body">
+	This is the content.
+</template>
+\end{lstlisting}
+
+\paragraph {} Het is bedoeling om in een template die een andere template extend
+enkel de blocken te overschrijven, en geen andere template stukken toe te voegen. Het is
+ook niet de bedoeling om eet template twee templates te laten extenden. Ook zou het
+\lstinline{<tpl extend="..." />} statement voor eender welk \lstinline{<tpl block="..." />}
+moeten komen. De volgorde van de blocken onderling maakt niet uit.
+
+
+\subsubsection {Looping (\lstinline{<tpl for="..." as="..." />}, \lstinline{<tpl foreach="..." key="..." value="..." />})}
+
+\paragraph {} Net zoals de standaard templates laat de \lstinline{<tpl for="..." />} je
+toe om over een array te itereren. Maar in tegenstelling tot de standaard template wordt de
+waarde van \lstinline{values} niet aangepast. In plaats daarvan geef je aan onder welke
+naam je de waarden wilt gebruiken. Dat doe je door in het \lstinline{as} attribuut een
+string in te vullen (dit moet een geldige javascript identifier zijn).
+
+\paragraph {} De index van de huidige iteratie vind je dan onder de zelfde naam gevolgd
+door \lstinline{Index}. Net zoals de standaard templates begint deze index vanaf 1 te
+tellen. Geef je geen naam op bij het attribuut \lstinline{as} dan zal je template ook niet
+werken.
+
+\begin{lstlisting}[language=xml]
+<template name="main">
+	<tpl for="values.names" as="name">
+		{[ nameIndex ]}) Hello {[ name ]}!
+	</tpl>
+</template>
+\end{lstlisting}
+
+\begin{lstlisting}
+{
+	"names": [ "john", "jane" ]
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+1) Hello john!
+2) Hello jane!
+\end{lstlisting}
+
+\paragraph {} Op een gelijkaardige manier kon je over objecten itereren met
+\lstinline{<tpl foreach="..." />}. Hier geef je een naam voor de key
+die je wilt gebruiken en een naamvoor de value.
+
+\begin{lstlisting}
+<template name="main">
+	<tpl foreach="values.configuration" key="configKey" value="configValue">
+		{[ configKey ]} is {[ configValue ]}
+	</tpl>
+</template>
+\end{lstlisting}
+
+\begin{lstlisting}
+{
+	"configuration": {
+		"indent": "spaces",
+		"level": 4
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+indent is spaces
+level is 4
+\end{lstlisting}
+
+\paragraph {} Zo kan je de loops zo diep nesten (al is dit vaak geen goed idee) zonder dat
+je ooit een deel van je context verliest.
+
+\begin{lstlisting}
+<template name="main">
+	<tpl for="values.users" as="user">
+		<tpl for="user.friends" as "friend">
+			<tpl for="friend.posts" as "post">
+				you gave {[ post.title ]} posted by {[ friend.name ]}
+				a {[ post.ratings[user.id] ]} out of 5
+			</tpl>
+		</tpl>
+	</tpl>
+</template>
+\end{lstlisting}
+
+
+\subsubsection {Control flow (\lstinline{<tpl if="..." />},
+	\lstinline{<tpl elseif="..." />}, \lstinline{<tpl else="..." />})}
+
+\paragraph {} De statements voor de control flow werken zoals je zou verwachten. Het
+verschil met de standaard sencha templates is dat nu de expressies voor de attrituben
+exact dezelfde zijn als de expressies die je zou gebruiken in \lstinline|{[ ... ]}|.
+
+\paragraph {}Als je \lstinline{<tpl elseif="" />} of \lstinline{<tpl else="" />} gebruikt
+mag er geen text staan tussen het begin van de \lstinline{else} of \lstinline{elseif} en
+de vorige \lstinline{if} of \lstinline{elseif} statement. Je mag hier enkel whitespace
+tussen voegen.
+
+\begin{lstlisting}
+<template name="main">
+	<tpl if="values.type === 'normal'">
+		...
+	</tpl>
+	<tpl elseif="values.type === 'failing'">
+		...
+	</tpl>
+	<tpl elseif="values.type === 'successful'">
+		...
+	</tpl>
+	<tpl else="">
+		...
+	</tpl>
+</template>
+\end{lstlisting}
+
+\paragraph {} Het is niet nodig om deze constructies te gebruiken. Je zou ook gewoon
+gebruik kunnen maken van \lstinline|{% if ( ... ) { %}|,
+\lstinline|{% } else if ( ... ) { %}| en \lstinline|{% } else { %}|. Maar de
+\lstinline{<tpl />} versies zien er eleganter uit.
+
+
+\subsubsection {Bemerkingen}
+
+\paragraph {} In principe is het mogelijk om in de template waarden toe te voegen aan het
+\lstinline{values} object. Deze waarden zijn dan ook toegankelijk in andere code, en kan
+dus een invloed hebben op de werking van andere code. In normale situaties gebruik je deze
+mogelijkheid niet. Het maakt je code moeilijk (of onmogelijk) te volgen. Er wordt geen
+poging ondernomen door de implementatie van de template om dit anti patroon te voorkomen.
+Maar een beetje gezond verstand zou voldoende moeten zijn om dit niet te misbruiken.
+
+
+\paragraph {} Het is ook mogelijk (als je naar de implementatie gaat kijken om de blocken
+(\lstinline{_ownedBlocks}, en \lstinline{_blocks} variable)
+van template aan te passen. Er zijn nog een aantal variable die door de implementatie
+gebruikt worden die mogelijk kunnen aangepast worden door code in de template.
+Bijvoorbeeld de \lstinline{_out} array die de output van de template bevat, of de
+\lstinline{_i0} variable die de index van een for loop bevat. Ook hier is het niet de
+bedoeling om deze waarden aan te passen. Ook hier wordt geen poging onder nomen om dit
+misbruik te stoppen.
+
+\paragraph {} Alles Dat in global scope (attributen van het \lstinline{window} object op
+web paginas) berijkbaar is kan door de template gebruikt worden, maar ook aangepast. Voor
+het gebruik kan dit van pas komen. Zo heb je bijvoorbeeld toegang tot
+\lstinline{Ext.util.Format} om datums en getallen te formateren. Maar Het is niet de
+bedoeling om waarden in global scope aan te maken of aan te passen. Ook dit anti
+patroon word niet tegengehouden.
+
+\paragraph {} Dit is geen beperking van de nieuwe implementatie. Ook de templates die je
+op de normale manier in sencha maakt kan je misbruik maken van global scope, enz.
+
+\paragraph {} Niet alle whitespace in de template wordt op dezelfde manier behandeld. Een
+stuk text dat enkel bestaat uit whitespace en een cariage return bevat wordt volledig
+genegeerd.
+
+\begin{lstlisting}[language=xml]
+<tpl for="values.users" as="user">
+	{[ user.firstname ]}
+	{[ user.lastname ]}
+</tpl
+\end{lstlisting}
+
+geeft als resultaat
+
+\begin{lstlisting}
+JohnDoe
+\end{lstlisting}
+
+in plaats van 
+
+\begin{lstlisting}
+
+	John
+	Doe
+
+\end{lstlisting}
+
+\paragraph {} Meestal is dit geen probleem. De templating engine is bedoelt om html
+tegenereren. Voor html heeft de hoeveelheid Whitespace geen belang, zolang er ten minste
+een spacie (of ander whitespace character) staat. Als je text op een nieuwe regel wil
+laten beginnen moet je \lstinline{<br />} toevoegen, wat geen whitespace meer is.
+
+\paragraph {} De enige plaats waar er problemen kunnen opduiken is in een situatie zoals
+hierboven. Je plaatst twee expresies op hun eigen lijn, en hoewel de het resultaat wel in
+de output verschijnt is alle whitespace er tussen verdwenen. Je zou door de template te
+lezen wel verwachten dat de voornaam en achternaam van elkaar gescheiden worden.
+
+\paragraph {} In deze situaties kan je whitspace tussen de expressies plaatsen door
+\lstinline|{% %}| voor de laatste regel te plaatsen, of achter de eerste. De twee
+expressies op die lijn worden dan enkel gescheiden door witruimte die geen enter bevat, en
+wordt wel opgenomen in de output.
+
+\begin{lstlisting}[language=xml]
+<tpl for="values.users" as="user">
+	{[ user.firstname ]} {% %}
+	{[ user.lastname ]}
+</tpl
+\end{lstlisting}
+
+geeft
+
+\begin{lstlisting}
+John Doe
+\end{lstlisting}

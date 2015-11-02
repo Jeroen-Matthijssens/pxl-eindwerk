@@ -1,0 +1,67 @@
+\documentclass[titlepage, 12pt]{article}
+\usepackage[a4paper, top=3cm, left=2.5cm, bottom=3.5cm, right=2.5cm, footskip=1.5cm]{geometry}
+
+\usepackage{courier}
+
+\usepackage[dutch]{babel}
+
+\usepackage[pdftex, colorlinks=true]{hyperref}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=0mm}
+
+% code listings
+\usepackage{mylstlisting}
+\lstset{style=nonu}
+\lstset{literate=}
+
+\usepackage{titlesec}
+
+\titleformat{\section}[block]
+	{\bfseries}
+	{\huge\thesection}
+	{1em}
+	{\huge}
+
+\titlespacing{\section}
+	{ 0cm }
+	{ 5.5ex plus 1.1ex minus .2ex }
+	{ 2pc }
+
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{}
+\cfoot{Jeroen Matthijssens}
+\rfoot{Pagina \thepage\ van \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\title{
+eva ()\\
+module fruitteelt beheer en toepassing controle
+}
+\author{Jeroen Matthijssens}
+\date{\today}
+
+\setlength{\parindent}{0cm}
+
+\begin {document}
+
+% \maketitle
+
+\tableofcontents
+% \pagestyle{empty}
+\newpage
+
+\pagestyle{fancy}
+
+\include{dankwoord}
+\include{bedrijf}
+\include{project}
+\include{verloop}
+
+\end{document}
