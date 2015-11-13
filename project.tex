@@ -1,50 +1,161 @@
 \section {project}
 
+\subsection {Kadering}
+
+\paragraph {} Fruittelers moeten in het uitoefenen van hun beroep een hoop administratie
+te verwerken. Zo worden hut fruitbomen en fruitstruiken regelmatig behandeld om de planten
+te beschermen tegen plagen en ziekten. Deze behandelingen moeten geregistreerd worden.
+Later moet de teler deze lijst kunnen voorleggen aan controleurs en veilingen. De
+controleurs zullen nagaan of de fruitteler de wettelijke beperkingen hebben gerespecteerd.
+De veilingen willen voornamelijk weten of er niet te veel residu op het fruit is achter
+gebleven.
+
+\paragraph {} Nu bestaat er een soort logboek waar de telers hun informatie moeten
+bijhouden. De administratie gebeurt in op papier geprinte bestand. In praktijk wordt deze
+registratie niet altijd even goed uitgevoerd. De adviseurs van pcfruit worden zo soms door
+telers gecontacteerd die op het einde van het jaar niet het nodige papier werk in orde
+hebben en de hulp van het advies centrum willen inschakelen.
+
+\paragraph {} Voor de fruitteler is het niet altijd eenvoudig om alle wettelijke
+beperkingen te kennen (hiervoor wordt de kennis en de expertise van het advies centrum
+gebruikt). De fruittelers moeten wel hun fruitbomen behandelen, maar contacteren daarvoor
+niet altijd pcfruit. Zo ontstaat de kans op fouten.
+
+Voor het uitvoeren van een behandeling moet de teler eers altijd een berekening maken om
+te weten hoeveel van welk product hij in een tank moet doen, en hoeveel volle tanken hij
+zo nodig heeft. Om overschot (en dus ook kosten) te reduceren wil de teler ook graag weten
+hoe vol de laatste tank moet zijn, en hoeveel product er in deze laatste tank moet.
+
+Voor dit project is er reeds door pcfruit een poging ondernomen om het registreren en het
+berekenen te vereenvoudigen. Immers als een fruitteler toch een berekening moet maken, kan
+je de applicatie deze berekening laten uitvoeren. De applicatie heeft dan alle gegevens
+die nodig zijn om uiteindelijk in de rapportage op te nemen. Het programma dat gebruikt
+wordt is PitSoft.
+
+\paragraph {} PitSoft heeft een grote beperking. Het weet immers niet welke dosisen nodig
+zijn om ziekten en plagen te bestrijden, en wat wettelijk toegelaten is. De fruitteler
+moest dus eerst de juiste dosis opzoeken, dan ingeven in PitSoft, om uiteindelijk het
+resultaat van de berekening te krijgen. Voor een aantal producten kennen de telers deze
+dosissen natuurlijk uit het hoofd, maar zeker niet voor allemaal. Daarbij komt dat de
+wettelijk toegelaten normen nog al eens kunnen veranderen. Voor het moeilijkste gedeelte
+moest de teler nog altijd handmatig achter informatie zoeken.
+
+Een extra beperking van PitSoft is dat het de fruitteler enkel ondersteunt voor
+registraties voor behandelingen van hun perceel en bemestingen. Alle andere informatie die
+verplicht in het logboek moet worden opgenomen wordt overgelaten aan de fruitteler. Zo
+moet de fruitteler ook bijhouden welke ziekten en plagen hij heeft ontdekt op zijn
+percelen, welke insecten vallen hij heeft opgezet, of in fonologisch stadium de
+fruitbomen en fruitstruiken zich bevinden.
+
+\paragraph {} EVA (Eindelijk vereenvoudigde administratie), het platform aangeboden door
+pcfruit, is een nieuw project dat opgestart werd ter vervanging van PitSoft. EVA op een
+moderne manier de tekortkomingen van PitSoft aan.
+
+
+\subsection {Scope van het project}
+
+\paragraph {} EVA is een project dat over een tijdspanne van vijf jaar wordt uitgewerkt.
+In een eerste fase wordt voornamelijk de concrete vereisten van het systeem in kaart
+gebracht door het maken van prototypes.
+
+\paragraph {} Het project bestaat uit twee delen, een deel van de applicatie is
+toegankelijk via een website, een ander gedeelte word aangeboden als een mobile
+applicatie. De flow zou er ruwweg als volgt uitzien. De fruitteler maakt eerst een
+opdracht aan, hij kiest hierbij het type (doel) van de opdracht, het toestel dat gebruikt
+wordt om de opdracht uit te voeren, de percelen waarop de opdracht moet worden
+uitgevoerd, en de producten waaruit de behandeling bestaat. De applicatie geeft dan een
+overzicht met de berekende tankvolumes en product doseringen.
+
+De fruitteler of een werknemer Kan dit overzicht afdrukken en de tankmix samenstellen,
+wanneer hij op het veld klaar is met het uitvoeren van de opdracht kan hij een smartphone
+of tablet nemen en de opdracht uitvoeren via de mobile applicatie. Later op de dag kan de
+fruitteler dan verifi\"eren dat alles correct is verlopen en de opdracht definitief
+registreren. De fruitteler kan daarbij nog wijzigingen aanbrengen als ze bijvoorbeeld
+constateren dat niet de correcte dosis werd gebruikt bij het samenstellen van de tankmix,
+of als er percelen niet werden behandeld zoals geplant.
+
+Later als een controleur deze documenten wil inzien kan de fruitteler een rapport printen
+dat alle behandelingen toont.
+
 
 \subsection {Stakeholders}
 
-\paragraph {Telers} De eindgebruikers van het systeem gaan de fruittelers zelf zijn.
-Zijzelf hebben weinig rechtstreekse inspraak in de ontwikkeling van het platform. De noden
-van de fruittelers zullen vertegenwoordigd worden door pcfruit. Vermits een van de
-doelstellingen is om een groot deel van de fruittelers met deze software te laten werken,
-zal er vooral veel nadruk gelegd moeten worden op usability en userfriendliness (telers
-van pit- en steenfruit willen alles in hectare, telers van houtig kleinfruit willen alles in
-hectare haag). De
-fruittelers zijn - doordat ze de feitelijke doelgroep zijn - uitstekend om feedback over
-usability van te ontvangen. Deze feedback zal via pcfruit terug tot bij ons komen in de
-vorm van feedback-cycles (tijdens de twee wekelijkes meetings).
-
-\paragraph {Overheid} Een groot stuk van de software zal gerealiseerd worden om de
-communicatie naar de overheid te versimpelen. Een ander stuk zal ervoor zorgen dat de
-waarden en de normen die de overheid vooropstelt overzichtelijk en duidelijk weergegeven
-worden aan eindgebruikers. De overheid zal zelf natuurlijk niet als een actieve
-stakeholder plaatsnemen, maar zal net zoals de fruittelers vertegenwoordigd worden door
-pcfruit zelf. Mochten er wijzigingen komen ontrent wetgeving in de fruitteelt, dan zal
-pcfruit ons op de hoogte brengen en nieuwe feature requests aanmaken.
+\paragraph {crosscomm communications NV} De implementatie en de ondersteuning van deze
+software zal gebeuren door Crosscom communications NV. Wij zullen de nodige technische
+analyse uitvoeren. We zitten samen met pcfruit aan de tafel om de planning op te stellen
+en de einddoelen per fase vast te leggen. Wij zullen de nodige hardware voorzien om het
+platform op te draaien, en voorzien de nodige support om alles in goede banen te leiden na
+de deployment van de fases. Wij zijn geen eindgebruiker van het platform, maar we de
+technische kant van he project uitwerken.
 
 \paragraph {pcfruit} De software wordt ontwikkeld voor pcfruit, dat heel het project
-financiert. pcfruit zal zelf geen eindgebruiker van het systeem zijn, maar zal als
-adviescentrum en productontwikkelaar op de hoogte zijn van elke stap in de
-ontwikkelingsprocedure. Ze worden betrokken bij de productmeetings en worden uitgenodigd
-bij globale meetings. pcfruit zal via showcases en testpools feedback verkrijgen van de
-echte eindgebruikers (de fruittelers), en brengt deze naar voren bij de ingeplande
-feedback-cycles.
+financiert. Zij zal als adviescentrum en productonwikkelaar op de hoogte zijn van elke
+stap in de ontwikkeling van de software. Zij hebben de mogelijkheid om bij te sturen
+de noden veranderen of duidelijker worden.
 
-\paragraph {crosscomm communications NV} De implementatie en de ondersteuning van deze
-software zal gebeuren door Crosscom communications NV. Wij zullen de nodige analyze voorop
-doen. We zitten samen met pcfruit aan de tafel om de planning op te stellen en de
-einddoelen per fase vast te leggen. Wij zullen de nodige hardware voorzien om het platform
-op te draaien, en voorzien de nodige support om alles in goede banen te leiden na de
-deployment van de fases. Op zich zijn wij geen stakeholder van het project zelf, maar wij
-zullen wel de technische kant van het project op ons moeten nemen en in het oog houden.
-Vermits wij de uiteindelijke software schrijven, zullen wij altijd op alle meetings
-aanwezig moeten zijn om ons product voor te stellen aan pcfruit en mogelijke aanpassingen
-in te plannen of opnieuw te faseren.
+pcfruit gebruikt de applicatie om de correcte beperkingen op het gebruik van
+producten te beheren. Op deze manier is de informatie die een teler krijgt altijd up to
+date. De adviseurs van pcfruit kunnen in een later stadium de applicatie ook gebruiken om
+telers beter te kunnen helpen. Zo zou een adviseur (mits toestemming van de teler) de
+spuitopdrachten kunnen inkijken en alternatieven kunnen voorstellen.
+
+pcfruit zal de feedback van telers en testers verzamelen en doorgeven aan Crossroad
+Communicatiens NV.
+
+\paragraph {Telers} De eindgebruikers van het systeem. De telers telen een of meerdere
+typen fruit. Zij vormen de grootste groep eindgebruikers van het systeem. De noden van de
+fruittelers zullen vertegenwoordigd worden door pcfruit. Rechtstreeks hebben de
+fruittelers geen inspraak in de ontwikkeling van de applicatie. Om telers makkelijker te
+overtuigen de nieuwe software te gebruiken voor het registreren on opstellen van
+spuitopdrachten is het belangrijk genoeg aandacht te schenken aan de interface en
+bruikbaarheid van de applicatie.
+
+Dit is niet altijd eenvoudig. Er zijn een aantal verschillende groepen waaronder een teelt
+kan vallen, houtig kleinfruit, pit- en steenfruit, aardbeien, druiven, ... In elke teelt
+worden gelijkaardige dingen op een net iets andere manier gedaan. Voor aardbeien word
+bladvoeding op dezelfde manier toegepast op het perceel als onkruidbestrijding, en wordt
+in beide gevallen rekening gehouden met de grond oppervlakte voor het berekenen van de
+tank volumes.
+
+Voor houtig kleinfruit wordt de bladvoeding op de loofwand gespoten. Voor
+onkruid wordt er echter op de grond herbicides gespoten. Hier moet voor de berekeningen
+van onkruidbestrijdingen rekeninng worden gehouden met de grond oppervlakte, maar voor de
+bladvoedingen met de oppervlakte loofwand.
+
+In het geval van pit- en steenfruit worden de producten op dezelfde manier toegepast als
+voor houtig kleinfruit, maar hier willen de telers altijd rekenenen met grond
+oppervlaktes, niet met oppervlakte haag. Hoewel de wettelijke limiten enkel uitgedrukt
+worden in oppervlakte haag.
+
+Het is belangrijk om de teler op een vertrouwde manier informatie te tonen, maar tegelijk
+ook om op een correcte uniforme manier berekeningen uit te werken.
+
+Het is belangrijk om de feedback die telers geven over het gebruik van de applicatie te
+verzamelen en te verwerken. Dit zal gebeuren door pcfruit. In de eerste plaats wordt de
+applicatie gebruikt door werknemers van pcfruit in de proeftuin. In een tweede fase worden
+stappen ook echte telers mee in het project. Deze telers hebben dan de mogelijkheid om mee
+hun stepel de drukken op de nieuwe applicatie.
+
+\paragraph {Overheid} Een groot deel van de applicatie draait rond rapportering, en in de
+eerste plaats rapportering naar controleurs. Een ander gedeelte laat toe om telers op de
+hoogte te brengen van de wettelijke beperking van het gebruik van pesticides en andere
+producten. Rechtstreeks zal de overheid natuurlijk niet actief als partner mee spelen. Hun
+noden wordt ook door pcfruit vertegenwoordigd. Zo moeten de rapporten die de applicatie
+genereerd overzichtelijk genoeg zijn, moet ze de juiste informatie bevatten, en relevant
+zijn voor de inspectie die controleurs uitvoeren.
+
+Zo wordt er bijvoorbeeld nog altijd overlegd over De beperkingen die worden opgelegd voor
+bemestingen. Eens er een beslissing wordt genomen zal pcfruit dit kaderen binnen het
+project.
 
 
 \subsection {Probleembeschrijving}
 
 \subsubsection {Verkoop}
+
+\paragraph {} Fruittelers verkopen hun fruit op een of meerdere fruitveilingen. Maar de
+fruitveilingen willen weten welke producten gebruikt werden op het fruit. De teler moet
+deze informatie doorgeven aan de veiling.
 
 \paragraph {} Fruittelers willen op een zo simpel mogelijke manier hun fruit
 verkopen op een veiling of op meerdere veilingen. Veilingen willen hun kwaliteit
@@ -55,7 +166,7 @@ opvolgen of ze op elk moment voldoen aan deze criteria. Een fruitteler wil niet 
 jaar fruit onderhouden, om het dan na de oogst niet te kunnen verkopen omdat ze een
 criterium over het hoofd gezien hebben. Een goed voorbeeld hiervoor is de dosering van
 pesticiden. Veilingen willen kunnen garanderen dat er ten hoogste een bepaalde hoeveelheid
-pesticide gebruikt is op hun producten. De fruitteler moet dan eerst en vooral al weten
+pesticide gebruikt is op hun producten. De fruitteler moet dan eerst en vooral weten
 dat deze regel bestaat. Hij zal ook moeten weten wat de limieten van de regel zijn.
 Uiteindelijk zal hij dan ook een overzicht willen van de gebruikte pesticiden op zijn
 perceel. Op die manier blijft hij een goede kijk hebben op heel het gebeuren, en zal hij
@@ -79,15 +190,16 @@ onderhouden zonder dat er communicatieproblemen zijn.
 
 \paragraph {} Een teler wil zijn oogst verkopen op een veiling waar strikte regulering is
 omtrent de gewassen die verkocht worden. Zo is het bijvoorbeeld niet aanvaardbaar fruit te
-verkopen waarop een te hoge dosis pesticide werd gespoten. Het kost moeite om al deze
+verkopen waarop een te hoge dosis pesticide wordt aangetroffen. Het kost moeite om al deze
 informatie bij te houden. Deze informatie moet dan voor elke veiling apart worden door
 gegeven. Sommige veilingen werken met een elektronisch systeem waar de telers op kunnen
-inloggen. Sommige veiligen werken met papieren aangiftes.
+inloggen. Sommige veilingen werken met papieren aangiftes.
 
 De informatie over welke producten werden gebruikt moet ook aan controleurs worden
-voorgelegd. Als er 
+voorgelegd. 
 Als de informatie 
 
+Deze informatie verzamelen gedurende het hele jaar kost tijd en moeite.
 Het bijhouden van deze
 informatie gedurende het hele jaar kost veel tijd en moeite voor een teler. Zonder hulp of
 advies bestaat het risico dat een onvoldoende geïnformeerde teler zijn oogst niet verkocht
@@ -96,15 +208,82 @@ krijgt op de veiling, of zelfs boetes moet betalen.
 
 \subsection {Oplossing}
 
-\paragraph {} pcfruit zal een platform aanbieden waarop de fruittelers hun percelen en hun gewassen zullen kunnen beheren. Fruittelers zullen hierop hun percelen virtueel kunnen voorstellen en zullen op deze percelen allerhande virtuele acties kunnen ondernemen. Deze acties zijn eigenlijk gewoon de virtuele counterparts voor de acties die de telers op hun echte percelen toepassen. Gaat een fruitteler bemesten op een perceel, dan zal hij een virtuele actie 'bemesten' aanmaken - met een aantal specificaties zoals: type bemesting, type aanbrenging, ... etc. Deze acties zal hij dan kunnen terugvinden via eender welke internet verbinding, waarna hij de acties als uitgevoerd kan aanduiden. Op deze manier kan iemand taken aanmaken voor andere fruittelers. Op deze virtuele percelen zullen ook virtuele gewassen aangebracht worden om op die manier de representatie van de werkelijkheid zo realistisch mogelijk te houden. Na het inbrengen van de virtuele gewassen zullen een aantal van de mogelijke acties - voor het virtuele perceel met dit virtueel gewas - aangereikt worden om op die manier informatie te verschaffen aan de fruittelers. [[[Op die manier heeft het bijvoorbeeld geen zin om pesticiden te selecteren om mestkevers te bestrijden, als je een veld met bananenbomen hebt, wetende dat bananenbomen niet gevoelig zijn voor mestkever]]]. Een hele lijst van pesticideacties voor het virtuele gewas dat je op dit virtuele perceel hebt staan, zal daarentegen wel weergegeven worden om selecties en acties makkelijk aan te maken. Bij het aanmaken van acties zal er ook altijd rekening gehouden worden met alle acties die op het virtuele perceel gebeurd zijn. Op die manier zal je een notificatie gegeven worden al je al voor de 3de keer je perceel gaat bemesten, terwijl je bij de 2de bemesting eigenlijk al aan je totaal toegelaten hoeveelheid meststoffen zat. Als de fruitteler daarentegen een actie toevoegd die hem de gewassen van het perceel laat vervangen door een ander gewas, dan zal bijvoorbeeld zijn teller voor pesticiden op het huidige gewas terug op 0 gezet worden. Na al deze informatie bijhouden, weergeven en advies over de ingegeven informatie geven, kan je ook steeds afdrukken raadplegen over de huidige situatie van een perceel of een gewas. Op die manier zal de communicatie naar de verschillende veilingen en de overheid een stuk aangenamer verlopen.
+\paragraph {} pcfruit zal een platform aanbieden waarop de fruittelers hun percelen en hun
+gewassen zullen kunnen beheren. Fruittelers zullen hierop hun percelen virtueel kunnen
+voorstellen en zullen op deze percelen allerhande virtuele acties kunnen ondernemen. Deze
+acties zijn eigenlijk gewoon de virtuele counterparts voor de acties die de telers op hun
+echte percelen toepassen. Gaat een fruitteler bemesten op een perceel, dan zal hij een
+virtuele actie 'bemesten' aanmaken - met een aantal specificaties zoals: type bemesting,
+type aanbrenging, ... etc. Deze acties zal hij dan kunnen terugvinden via eender welke
+internet verbinding, waarna hij de acties als uitgevoerd kan aanduiden. Op deze manier kan
+iemand taken aanmaken voor andere fruittelers. Op deze virtuele percelen zullen ook
+virtuele gewassen aangebracht worden om op die manier de representatie van de
+werkelijkheid zo realistisch mogelijk te houden. Na het inbrengen van de virtuele gewassen
+zullen een aantal van de mogelijke acties - voor het virtuele perceel met dit virtueel
+gewas - aangereikt worden om op die manier informatie te verschaffen aan de fruittelers.
+[[[Op die manier heeft het bijvoorbeeld geen zin om pesticiden te selecteren om mestkevers
+te bestrijden, als je een veld met bananenbomen hebt, wetende dat bananenbomen niet
+gevoelig zijn voor mestkever]]]. Een hele lijst van pesticideacties voor het virtuele
+gewas dat je op dit virtuele perceel hebt staan, zal daarentegen wel weergegeven worden om
+selecties en acties makkelijk aan te maken. Bij het aanmaken van acties zal er ook altijd
+rekening gehouden worden met alle acties die op het virtuele perceel gebeurd zijn. Op die
+manier zal je een notificatie gegeven worden al je al voor de 3de keer je perceel gaat
+bemesten, terwijl je bij de 2de bemesting eigenlijk al aan je totaal toegelaten
+hoeveelheid meststoffen zat. Als de fruitteler daarentegen een actie toevoegd die hem de
+gewassen van het perceel laat vervangen door een ander gewas, dan zal bijvoorbeeld zijn
+teller voor pesticiden op het huidige gewas terug op 0 gezet worden. Na al deze informatie
+bijhouden, weergeven en advies over de ingegeven informatie geven, kan je ook steeds
+afdrukken raadplegen over de huidige situatie van een perceel of een gewas. Op die manier
+zal de communicatie naar de verschillende veilingen en de overheid een stuk aangenamer
+verlopen.
+
 
 \subsection {Voordelen}
 
-\paragraph {} Bij het aanmaken van een sproei taak wordt de fruitteler op verschillende
-momenten bijgestaan door pcfruit.
+\paragraph {} Boven de oplossingen die de applicatie beid voor de problemen en ongemakken
+die de fruittelers ervaren zijn er extra mogelijkheden om de software nog nuttiger te
+maken.
 
-\paragraph {} Een eerste voordeel is dat de informatie van de sproei taken digitaal
-bijgehouden wordt.  Hierdoor kan de fruitteler de overheid en de veiling voorzien van het
+\paragraph {} Omdat de informatie nu digitaal wordt bijgehouden is het mogelijk om later
+nieuwe rapporten te genereren die anders gestructureerd zijn. De teler moet niets extra
+doen om bijvoorbeeld zijn fruit te exporteren naar landen waar weer een andere manier van
+rapportering wordt gebruikt.
+
+\paragraph {} Het is nu ook mogelijk om data van een
+veel telers samen te analyseren, bijvoorbeeld om bepaalde patronen van ziekte verspreiding
+in kaart te brengen. Hierbij moet natuurlijk de privacy van de fruitteler gerespecteerd
+worden (bijvoorbeeld door de data enkel te gebruiken wanneer de fruitteler toestemming
+geeft). De crowdsourcing van de data die telers ingeven opent de deur voor een hoop
+analyses die voorheen veel moeilijker of praktisch onmogelijk waren.
+
+\paragraph {} Omdat het platform een online service is kan het gebruikt worden om telers
+en adviseurs met elkaar te laten communiceren. De adviseurs kunnen de extra informatie die
+uit de crowdsourcing naar boven komt gebruiken om fruittelers preventief informatie te
+geven
+
+\paragraph {} Stel dat er een aantal fruittelers die geografisch dicht bij elkaar percelen
+beheren problemen krijgen met een kever plaag. Elk van deze fruittelers zal in het
+platform registraties invoeren voor de plaag, en waarschijnlijk ook een behandeling
+samenstellen om zijn teelt tegen de plaag te beschremen. Een van de andere fruittelers zal
+mogelijk de plaag nog niet vast gesteld hebben. pcfruit kan door middel van de eerder
+vergaarde data een suggestie sturen naar de fruitteler die deze plaag nog niet heeft vast
+gesteld. De teler ontdekt dan sneller, in een vroeger stadium de plaag op zijn perelen, en
+kan zo zijn fruitbomen beter en goedkoper beschermen.
+
+\paragraph {} pcfruit  kan deze data gebruiken om de doeltreffendheid van behandelingen te
+controleren wanneer ze in werkelijke situaties worden toegepast, of om te controleren met
+welke bemesting strategie\"en het meeste oogst wordt gerealiseerd. Omdat pcfruit data van
+meerdere fruittelers kan inkijken over verschillende jaren is het mogelijk om trends te
+ontdekken die anders onzichtbaar bleven.
+
+\paragraph {} 
+
+
+\subsection {Something}
+
+
+\paragraph {} Een eerste voordeel is dat de informatie van de sproeitaken digitaal wordt
+bijgehouden. Hierdoor kan de fruitteler de overheid en de veiling voorzien van het
 nodige papierwerk wanneer hun oogst voor verkoop wordt opgegeven. pcfruit voorziet de
 teler van de nodige rapportages over alle sproei taken waarin de samenvatting van de
 gebruikte stoffen te vinden is.
@@ -124,19 +303,7 @@ teler zeker zijn dat hij altijd de juiste hoeveelheid stoffen gebruikt en bijgev
 het juiste papierwerk kan voorleggen bij de volgende controle.
 
 
-\subsection {Kadering}
-
-\paragraph {} EVA (Eindelijk vereenvoudigde administratie), het platform aangeboden door
-pcfruit, is een nieuw project dat opgestart werd ter vervanging van PitSoft. EVA pakt
-enkele tekortkomingen van PitSoft aan zoals het automatisch berekenen van dosering en tank
-volume. EVA zal in de toekomst verder uitgebreid worden om meer functionaliteit te bieden
-aan de telers.
-
 \subsection {Toekomstplannen}
-
-\paragraph {} De initiele budgetering is gemaakt voor een tijdspanne van 5 jaar. Tijdens de rest van
-het ontwikkelings process zullen enkele belangrijke nieuwe features geimplementeerd
-worden.
 
 Bemestingen
 
@@ -157,18 +324,6 @@ mobile omgeving werken kunnen we gebruik maken van gps locatie om automatisch he
 te kiezen tijdens het invullen van de waargenomen problemen.
 
 Crowdsourcing
-
-\paragraph {} Wanneer het aantal fruittelers dat het platform gebruikt groeit krijgt pcfruit
-meer informatie over de gewassen en de plagen die voorkomen. Dit opent de optie om data
-analyse te doen en eventueel preventieve maatregels voor te stellen aan de telers.
-
-\paragraph {} Stel dat er een aantal fruittelers die geografisch dicht bij elkaar percelen
-beheren problemen krijgen met een kever plaag. Elk van deze fruittelers zal in het platform
-deze informatie ingeven, en een sproeiactie boeken om tegen de kevers te sproeien. Een van
-de andere fruittelers zal mogelijk de plaag nog niet vast gesteld hebben. pcfruit kan door
-middel van de eerder vergaarde data een suggestie sturen naar de fruitteler die deze plaag nog
-niet heeft vast gesteld om preventief tegen deze kever soort te sproeien en zo een deel
-van zijn oogst redden die hij anders verloren zou hebben.
 
 \paragraph {} Een tweede voordeel van crowdsourced data te analyseren is dat de fruittelers ook
 kunnen opgeven hoeveel oogst ze hebben gehaald uit verschillende gewassen. Omdat alle

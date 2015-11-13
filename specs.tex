@@ -1,0 +1,247 @@
+\section {Module fruitteelt beheer en toepassing controle}
+
+\subsection {Web App}
+
+\paragraph {} De web app is bedoeld om de fruittelers thuis de opdrachten op te stellen,
+de uitgevoerde opdrachten te valideren, en de rapporten te genereren die hij moet kunnen
+voorleggen.
+
+Voordat een fruitteler de applicatie echt kan gebruiken is er eerst informatie nodig die
+hij moet ingeven, dit is slechts 1 keer nodig bij het opstarten van zijn account. Een
+overzicht van wat dit inhoud wordt gegeven in \ref{general_management} 'General
+Managament'.
+
+Eenmaal de startup is afgerond kan de applicatie gebruikt worden om (op dit moment) de
+spuitopdrachten en bemestingsopdrachten op te stellen. Hierbij wordt de fruitteler
+bijgestaan door de applicatie, die nu intelligente beslissingen kan maken en relevante
+suggesties kan geven aan de teler. Dit wordt besproken in \ref{aanmaken_opdrachten}
+'Aanmaken van opdrachten' en \ref{rapportering} 'Rapportering'.
+
+pcfruit kan gebruik maken gewasbeschermingsmiddelen beheer. Zo kan pcfruit de wettelijke
+beperkingen up to date houden.
+
+
+\subsubsection {General Managament}\label{general_management}
+
+\paragraph {} Je kan niet zelf geen account registreren via de web app (of de mobile app).
+pcfruit maakt voor een nieuwe
+fruitteler een bedrijf aan met een gebruiker. De fruitteler kan dan basis gegevens voor
+zijn bedrijf aanvullen en personeelsleden aanmaken. De nieuwe personeelsleden kunnen
+optioneel ook een gebruikers account krijgen op het platform. Die gebruikers zijn
+automatisch gekoppeld aan het bedrijf van de fruitteler. Dit is bedoelt om werknemers
+toegang te geven tot de mobile app zodat ze de opdrachten die de fruitteler aanmaakt als
+afgehandeld kunnen markeren terwijl de werknemer zich nog op het veld begeeft.
+
+\paragraph {} Om functioneel met de applicatie te kunnen werken moet de teler bepaalde
+informatie opgeven. Dit maakt deel uit van de opstart van een bedrijf.
+De applicatie moet weten welke percelen de teler bezit.
+Elk perceel heeft een teelt die geteeld word en een oppervlakte. Als er houtig
+kleinfruit of druiven worden geteeld op het perceel zal de teler ook moeten opgeven wat de
+totale lengte is van alle rijen die op het perceel staan, samen met een standaard hoogte.
+Dit wordt later gebruikt om de oppervlakte loofwand te berekenen. Telers van pit- en
+steenfruit werken op een andere manier. Voor hun wordt dit berekened op basis von de
+grond oppervlakte.
+
+Percelen kunnen onderverdeeld worden in groepen. Vaak worden een groot aantal percelen in
+een keer behandeld. Door alles in betekenis volle groepen te verdelen kan de fruitteler
+makkelijker in een keer de relevante percelen selecteren.
+
+Verder kan de fruitteler nog extra informatie over de percelen in geven die later van pas
+kan komen. Er is ook de mogelijkheid om het perceel op een kaart te tekenen (google maps).
+In principe zou je de oppervlakte van het perceel kunnen berekenen uit het getekende
+figuur. Maar in praktijk weet de teler exact hoe groot zijn perceel is.
+
+Het is wel nuttig om de geografische locatie te kennen om later een voorstel te doen op
+basis van gps co\"ordinaten. Als een gebruiker een registratie wil invoeren via de mobile
+app, dan kunnen we de lijst van percelen bijvoorbeeld rangschikken op basis van afstand
+tot de plaats waar de gebruiker zich op dat moment bevindt.
+
+\paragraph {} Bij het uitvoeren van een spuitopdracht wordt altijd een machine gebruikt.
+Deze heeft een tankvolume en verbruikt een hoeveelheid water per oppervlakte. De
+toestellen bij verschillende opdrachten opnieuw gebruikt. Hier kan de fruitteler de
+informatie een keer ingeven en moet hij zich er niets meer van aantrekken bij het aanmaken
+van een opdracht.
+
+Er zijn een aantal verschillende type van toestellen. Sommige toestellen worden gebruikt
+om de loofwand van de planten te besproeien, sommige machines worden gebruikt om onkruiden
+op de grond te behandelen of om meststoffen te verspieden. Deze toestellen hebben andere
+informatie waarin de applicatie ge\"interesseerd is. Als je het type van het toestel
+veranderd, worden er andere velden zichtbaar die ingevuld kunnen worden.
+
+\paragraph {} Als een fruitteler een bemestingsopdracht wilt opstellen moet hij ook
+producten selecteren, maar de lijst van mogelijke producten zijn eindeloos. pcfruit heeft
+wel een lijst samengesteld met veelgebruikte meststoffen, maar er mogen ook andere
+producten worden gebruikt. De fruitteler kan bij de meststoffen zijn eigen producten
+toevoegen. Producten die een teler zelf toevoegt zijn niet zichtbaar voor andere telers.
+
+
+\subsubsection {Aanmaken van opdrachten}\label{aanmaken_opdrachten}
+
+\paragraph {} Je krijgt een lijst van alle opdrachten die al aangemaakt zijn. Deze kan je
+dan selecteren en aanpassen, of je kan een volledig nieuwe opdracht aanmaken. Bij de
+bestaande opdrachten krijg je standaard het overzicht te zien. Bij het aanmaken van een
+opdracht moet de volgorde van de tabs bovenaan gerespecteerd worden. Doe je dit niet, dan
+kan je geen waarden ingeven. De informatie in deze tabs hangen af van wat in de vorige
+werd ingegeven. Als je informatie in de voorgaande aanpast gecontroleerd of alles nog
+klopt. Is dit niet het geval dan wordt de gebruiken gewaarschuwd en kan hij kiezen om het
+systeem alles dat niet klopt te verwijderen, of om de verandering ongedaan te maken.
+
+\paragraph {} Als je een opdracht aanmaakt kan je een naam opgeven. De naam dient alleen
+om makkelijk je opdracht terug te vinden in de lijst. Je geeft aan wat voor type opdracht
+je wilt maken, bemesting, gewasbescherming, onkruidbestrijding of andere. Deze keuze is
+belangrijk om te bepalen welke toestellen gebruikt kunnen worden, en welke producten de
+fruitteler wil selecteren.
+
+\paragraph {} Je geeft ook op voor welke teelt groep de opdracht van toepassing is.
+Fruittelers uit de verschillende groepen zijn gewoon om met andere eenheden te rekenen.
+Het is belangrijk om de telers waarden en berekeningen te tonen die overeenkomen met hun
+manier van werken.
+
+Zo wordt in houtig kleinfruit de werkelijke loofwand oppervlakte berekend en gebruikt in
+verdere berekeningen. Telers var pit- en steenfruit gebruiken een omzet factor om de
+loofwand oppervlakte te benaderen.
+
+Appelbomen en perenbomen blijven jaren op een perceel staan en veranderen niet van hoogte,
+de breedte van de rijen en de afstand tussen de rijen blijft ongeveer dezelfde van perceel
+to perceel. Je kan dus een keer de verhouding tussen de loofwand oppervlakte en de
+grondoppervlakte kunnen uitrekenen en daarna altijd deze factor gebruiken. Er is immers
+weinig verschil tussen de percelen onderling en verschillende tijdstippen op een jaar voor
+een percelen.
+
+Houtig kleinfruit zijn vaak planten die snel groeien en in potten geteeld worden.  Er is
+dus een groot verschil tussen de planten wanneer ze net op het veld worden geplaatst en de
+planten net voor de oogst. Als je in het begin bijvoorbeeld $1.5$ keer de grondoppervlakte
+gebruikt wordt om de dosis te bepalen, dan zal je de planten met teveel product
+behandelen, en later net voor de oogst te weinig. Voor de telers is de oppervlakte
+loofwand wel degelijk belangrijk.
+
+Druivelaars zijn ook bomen die lange tijd op een perceel blijven staan en ongeveer
+dezelfde hoogte behouden. In tegenstelling tot pit- en steenfruit wordt hier niet met een
+factor gewerkt, maar wordt de oppervlakte loofwand ook berekend.
+
+\paragraph {} Als je alle voorgaande informatie hebt ingegeven worden de machines die bij
+de opstart werden ingegeven gefilterd zodat enkel relevante machines getoond worden. De
+fruitteler selecteert er een van. Hij kan daarna nog altijd de hoeveelheid water dat
+gebruikt wordt aanpassen. Het tank volume van een machine blijft wel dezelfde maar de druk
+en de sproei knoppen kunnen aangepast worden om meer of minder water te verbruiken.
+
+\paragraph {} Na het selecteren van de machine dat gebruikt wordt voor de opdracht kiest
+de fruitteler welke percelen behandeld moeten worden. Deze lijst is al gefilterd op basis
+van de teelt groep die eerder werd gekozen.
+
+\paragraph {} Als laatste worden de producten voor de tankmix gekozen. Welke producten de
+teler kan kiezen hangt af van het type opdracht dat wordt gemaakt. Voor onkruidbestrijding
+en gewasbeschreming moet de teler ook opgeven waarom hij het product gebruikt. Welke plaag
+of ziekte hij wil bestrijden. Voor deze producten worden de dosissen voorgesteld. Dit zijn
+producten waarop de wettelijke limieten van toepassing zijn.
+
+Voor gewasbescherming (dit zijn opdrachten waar de loofwand van de teelt behandeld wordt)
+kan de fruitteler ook bepaalde meststoffen in de tankmix toevoegen. Hier zijn geen
+voorstellen voor dosering mogelijk en de fruitteler moet ze dus zelf ingeven.
+
+\paragraph {} Nadat alle details zijn ingeven kan je op het overzicht zien hoeveel van welk
+product nodig is om alle percelen te behandelen. Er wordt een berekening gemaakt zodat de
+fruitteler weet hoeveel volle tanken hij moet mixen, en hoe vol zijn laatste rest tank
+moet zijn. Voor zowel de volle tanken als de rest tank wordt wat de totale dosis getoond
+die in de tank moet worden toegevoegd. Dit zijn berekeningen die hiervoor met pitsoft
+gebeurde, of met een rekenmachine en een stuk papier.
+
+\paragraph {} Na het overlopen van het overzicht kan de fruitteler de nieuwe opdracht
+opslaan. Voor dat dit echt wordt bijgehouden krijgt de teler een rapport te zien met
+eventuele waarschuwingen als producten bijvoorbeeld te vaak gebruikt wordt. Producten
+mogen maar een beperkt aantal keer gebruikt worden op hetzelfde perceel. Niet alleen mogen
+de producten een beperkt aantal keer gebruikt worden, maar de producten hebben actieve
+stoffen die zelf ook maar een beperkt aantal keer mogen gebruikt worden. De actieve
+stoffen worden onderverdeeld in families. Weer mogen bepaalde families slechts een aantal
+keer worden ingezet.
+
+Je zou dus een product vier keer mogen gebruiken, maar omdat je een ander product hebt
+gebruikt met actieve stoffen in de zelfde families zou je nu bij de tweede toepassing al
+een overtreding begaan. Deze informatie wordt in een overzicht weergegeven met
+aanduidingen als beperkingen zouden worden overschreden.
+
+De teler kan dan kiezen om terug naar de opdracht te gaan en zijn producten of percelen
+aan passen zodat hij niet over de wettelijke beperkingen gaat, of hij kan kiezen om toch
+op te slaan en later de opdracht nog aanpassen.
+
+\paragraph {} De opdracht die zijn opgeslagen kan dan via de mobile app of via de webapp
+worden uitgevoerd.
+
+
+\subsubsection {Schemas}
+
+\paragraph {} Nadat de opdrachten werden uitgevoerd zijn ze zichtbaar in een schema. Hier
+kan de fruitteler nog eens over alle opdrachten en gaan en controleren of alles
+geregistreerd is zoals op het veld gebeurde. Hij kan dan de opdrachten valideren, en het
+zijn de gevalideerde opdrachten die worden opgenomen in de rapportering.
+
+\paragraph {gewasbescherming}
+
+\paragraph {bemestingen} De wetgeving wordt herzien tijdens de ontwikkeling van de
+applicatie. Het is dus nog niet mogelijk om voor overtredingen te waarschuwen. In het
+overzicht wordt wel getoond hoeveel stikstof, fosfor, en kalium er bij elk product word
+gebruikt.
+
+\paragraph {toepassingen}
+
+
+\subsubsection {rapportering}\label{rapportering}
+
+\paragraph {} Gelijkaardig aan het schema kan je hier een overzicht vinden van alle
+opdrachten die gevalideerd werden.
+
+\paragraph {} Er is ook een overzicht dat de telers helpt om te zien hoevaak een bepaald
+product op een perceel gebruikt werd, en of er daarbij een limit werd overschreden.
+
+
+\subsubsection {gbmbeheer}
+
+\paragraph {} Om de informatie rond het gebruik van producten en hun wettelijke
+beperkingen up to date te houden heeft pcfruit een een account waarop deze informatie kan
+worden aanpepast.
+
+
+\subsection {Mobile app}
+
+\subsubsection {timeline}
+
+\subsubsection {mobile app registreren}
+
+\paragraph {} De belangrijkste opdrachten worden in de tijdslijn opgelijst. De gebruiker
+kan op de opdracht klikken en krijgt een schrem waar hij details kan aanpassen. De
+opdrachten die in de tijdslijn worden opgelijst zijn de spuitopdrachten en de bemestings
+opdrachten. Er zijn twee andere registraties die kunnen worden ingegeven, oogst
+registraties en taak registraties. Deze hebben voorlopig enkel een informatieve rol.
+
+\paragraph {} Alle registraties volgen een gelijkaardig structuur. Alle registraties
+hebben een lijst van percelen waarop de registratie wordt gedaan, en een lijst van
+personeelsleden dat deelnam aan de activiteiten. Soms zijn niet alle personen die
+deelnamen aan de activiteiten personeels leden. In dat geval is er de mogelijkheid om ook
+op te geven hoeveel personen hebben deelgenomen, zonder dat er een link gemaakt wordt naar
+de personeels leden.
+
+Er is altijd een datum waarop de registratie wordt uitgevoerd, een duur die aangeeft
+hoe lang de activiteiten in beslag namen, en een optionele opmerking waar de gebruiker
+vrij wat text kan ingeven.
+
+Afhankelijk van het type registratie zijn er soms enkele extra velden. Bij oogst kan het
+type verpakking worden ingegeven (en het aantal natuurlijk).
+
+
+\subsubsection {mobile app waarnemingen}
+
+\paragraph {} Waarneming zijn gelijkaardig aan de registraties, maar ze hebben geen
+gelinkte personeelsleden. De waarneming wordt gewoon gedaan door de persoon die ze
+ingeeft. Er is wel een lijst met gelinkte percelen.
+
+Waarnemingen zijn bijvoorbeeld valvangsten van een plaag. Een andere is de fenologisch
+stadiums van hun teelt aangeven. Dit wordt in een latere fase gebruikt om de fruitteler te
+waarschuwen als een product niet mag toegepast worden in het stadium waarin zijn teelt
+zich op dit moment bevindt.
+
+
+\subsection {gebruik local storage, rest backend}
+
+\paragraph {} Een hoop data is vrij statisch vanuit het opzicht van de fruitteler. De
+erkenningen en producten veranderen niet vaak. De data is wel redelijk groot en wordt op
+veel plaatsen gebruikt.
